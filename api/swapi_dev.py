@@ -30,6 +30,7 @@ class Swapi_dev_api(Http_methods):
         list_api_personage = []
         for api_films in self.personage.list_api_films:
             response = self.get(api_films)
+            Checking.check_status_code(response, 200)
             list_api_personage.extend(response.json().get('characters'))
         list_api_personage = list(set(list_api_personage))  # Убираем из списка повторяющиеся API персонажей
         print(f"Создали список с API персонажей, которые снимались в фильмах вместе с {self.personage.name}")
@@ -40,6 +41,7 @@ class Swapi_dev_api(Http_methods):
         list_name_connect_personage = []
         for api_personage in self.get_list_api_personage_in_film():
             response = self.get(api_personage)
+            Checking.check_status_code(response, 200)
             name = response.json().get('name')
             list_name_connect_personage.append(name)
         print(f"Создали список имен персонажей, которые снимались в фильмах вместе с {self.personage.name}")
